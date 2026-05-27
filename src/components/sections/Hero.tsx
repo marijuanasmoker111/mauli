@@ -37,12 +37,12 @@ export default function Hero() {
     const revealTl = gsap.timeline({ delay: 0.5 });
     
     if (titleRef.current) {
+      const titleLines = titleRef.current.querySelectorAll("span > span");
       revealTl.fromTo(
-        titleRef.current.children,
-        { opacity: 0, y: 40 },
+        titleLines,
+        { yPercent: 105 },
         { 
-          opacity: 1, 
-          y: 0, 
+          yPercent: 0, 
           stagger: 0.15, 
           duration: 1.2, 
           ease: "power4.out",
@@ -134,9 +134,13 @@ export default function Hero() {
           ref={titleRef} 
           className="font-display font-bold fluid-heading-xl mb-6 leading-[1.05] tracking-tight"
         >
-          <span className="block text-white">Make Happy</span>
-          <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#c5a880] via-[#e2cda3] to-[#c5a880]">
-            Workplace.
+          <span className="block overflow-hidden relative py-1">
+            <span className="block text-white select-none">Make Happy</span>
+          </span>
+          <span className="block overflow-hidden relative py-1">
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#c5a880] via-[#e2cda3] to-[#c5a880] select-none">
+              Workplace.
+            </span>
           </span>
         </h1>
 

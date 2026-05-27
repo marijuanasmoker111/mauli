@@ -29,6 +29,28 @@ export default function About() {
       );
     });
 
+    // Animate the main intro block
+    const intro = containerRef.current.querySelector(".reveal-intro");
+    if (intro) {
+      const sub = intro.querySelector(".reveal-intro-sub");
+      const title = intro.querySelector(".reveal-intro-title");
+      
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: intro,
+          start: "top 85%",
+          toggleActions: "play none none none",
+        }
+      });
+      
+      if (sub) {
+        tl.fromTo(sub, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6 });
+      }
+      if (title) {
+        tl.fromTo(title, { yPercent: 105 }, { yPercent: 0, duration: 0.9, ease: "power4.out" }, "-=0.4");
+      }
+    }
+
   }, []);
 
   return (
@@ -44,12 +66,12 @@ export default function About() {
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
         
         {/* Conceptual introduction HUD block */}
-        <div className="max-w-2xl mb-12 md:mb-24 text-left">
-          <span className="font-micro text-[10px] text-accent-orange tracking-widest uppercase block mb-1">
+        <div className="max-w-2xl mb-12 md:mb-24 text-left reveal-intro">
+          <span className="reveal-intro-sub font-micro text-[10px] text-accent-orange tracking-widest uppercase block mb-1 opacity-0 select-none">
             COMPANY LEADERSHIP & FOUNDATION
           </span>
-          <h2 className="font-display text-2xl md:text-3xl font-extrabold uppercase text-white leading-none">
-            About Mauli Enterprises
+          <h2 className="font-display text-2xl md:text-3xl font-extrabold uppercase text-white leading-none overflow-hidden relative py-0.5">
+            <span className="block translate-y-[105%] reveal-intro-title select-none">About Mauli Enterprises</span>
           </h2>
         </div>
 

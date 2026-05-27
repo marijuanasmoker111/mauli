@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { clients } from "@/data/mock";
 
 export default function Clients() {
@@ -9,11 +10,44 @@ export default function Clients() {
   const marqueeRef2 = useRef<HTMLDivElement>(null);
   const marqueeRef3 = useRef<HTMLDivElement>(null);
   
+  const sectionRef = useRef<HTMLElement>(null);
+  const subtitleRef = useRef<HTMLSpanElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+
   const tween1 = useRef<gsap.core.Tween | null>(null);
   const tween2 = useRef<gsap.core.Tween | null>(null);
   const tween3 = useRef<gsap.core.Tween | null>(null);
 
   useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Context for scroll-triggered heading reveal
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        }
+      });
+
+      if (subtitleRef.current) {
+        tl.fromTo(subtitleRef.current,
+          { opacity: 0, y: 15 },
+          { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }
+        );
+      }
+
+      if (titleRef.current) {
+        const titleLines = titleRef.current.querySelectorAll("span > span");
+        tl.fromTo(titleLines,
+          { yPercent: 105 },
+          { yPercent: 0, duration: 1.1, ease: "power4.out", stagger: 0.12 },
+          "-=0.65"
+        );
+      }
+    }, sectionRef);
+
     // Left-to-right marquee (Very slow and elegant)
     const m1 = marqueeRef1.current;
     if (m1) {
@@ -21,13 +55,13 @@ export default function Clients() {
       
       tween1.current = gsap.to(m1, {
         x: -totalWidth,
-        duration: 55, // Reduced speed (originally 25s)
+        duration: 55,
         ease: "none",
         repeat: -1,
       });
     }
 
-    // Right-to-left marquee (Even slower, reverse direction)
+    // Right-to-left marquee
     const m2 = marqueeRef2.current;
     if (m2) {
       const totalWidth = m2.scrollWidth / 2;
@@ -36,27 +70,28 @@ export default function Clients() {
         { x: -totalWidth },
         {
           x: 0,
-          duration: 65, // Reduced speed (originally 20s)
+          duration: 65,
           ease: "none",
           repeat: -1,
         }
       );
     }
 
-    // Third row of marquee (Slowest, distinct weight and size)
+    // Third row of marquee
     const m3 = marqueeRef3.current;
     if (m3) {
       const totalWidth = m3.scrollWidth / 2;
       
       tween3.current = gsap.to(m3, {
         x: -totalWidth,
-        duration: 80, // Slowest speed
+        duration: 80,
         ease: "none",
         repeat: -1,
       });
     }
 
     return () => {
+      ctx.revert();
       tween1.current?.kill();
       tween2.current?.kill();
       tween3.current?.kill();
@@ -75,6 +110,7 @@ export default function Clients() {
   return (
     <section 
       id="clients" 
+      ref={sectionRef}
       className="relative py-20 md:py-32 lg:py-44 bg-[#030303] text-white overflow-hidden border-b border-white/5 flex flex-col justify-center select-none"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -88,17 +124,24 @@ export default function Clients() {
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-24 mb-20 w-full text-left">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div className="max-w-3xl">
-            <span className="font-micro text-xs text-[#c5a880] uppercase tracking-[0.25em] block mb-3 font-bold">
+            <span ref={subtitleRef} className="font-micro text-xs text-[#c5a880] uppercase tracking-[0.25em] block mb-3 font-bold select-none opacity-0">
               ESTABLISHED PORTFOLIO
             </span>
-            <h2 className="font-display text-4xl md:text-6xl font-black leading-tight text-white tracking-tighter uppercase">
-              We have done some
-              <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#c5a880] via-[#f8f9fa] to-[#9fb89b]">
-                dynamic projects
+            <h2 
+              ref={titleRef}
+              className="font-display text-4xl md:text-6xl font-black leading-tight text-white tracking-tighter uppercase"
+            >
+              <span className="block overflow-hidden relative py-0.5">
+                <span className="block translate-y-[105%] select-none">We have done some</span>
               </span>
-              <br />
-              in reputed companies.
+              <span className="block overflow-hidden relative py-0.5">
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#c5a880] via-[#f8f9fa] to-[#9fb89b] translate-y-[105%] select-none">
+                  dynamic projects
+                </span>
+              </span>
+              <span className="block overflow-hidden relative py-0.5">
+                <span className="block translate-y-[105%] select-none">in reputed companies.</span>
+              </span>
             </h2>
           </div>
           <div className="max-w-sm md:mb-2">

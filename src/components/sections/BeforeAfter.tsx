@@ -1,12 +1,49 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default function BeforeAfter() {
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const subtitleRef = useRef<HTMLSpanElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 85%",
+          toggleActions: "play none none none",
+        }
+      });
+
+      if (subtitleRef.current) {
+        tl.fromTo(subtitleRef.current,
+          { opacity: 0, y: 15 },
+          { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }
+        );
+      }
+
+      if (titleRef.current) {
+        const titleLines = titleRef.current.querySelectorAll("span > span");
+        tl.fromTo(titleLines,
+          { yPercent: 105 },
+          { yPercent: 0, duration: 1.1, ease: "power4.out", stagger: 0.15 },
+          "-=0.6"
+        );
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   const handlePointerDown = () => {
     setIsDragging(true);
@@ -25,19 +62,25 @@ export default function BeforeAfter() {
   };
 
   return (
-    <section className="relative py-24 md:py-36 bg-[#050505] text-white overflow-hidden border-b border-white/5">
+    <section ref={sectionRef} className="relative py-24 md:py-36 bg-[#050505] text-white overflow-hidden border-b border-white/5">
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
         
         {/* Header Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-end mb-16">
           <div>
-            <span className="font-micro text-xs text-accent-green uppercase tracking-widest block mb-2 font-bold">
+            <span ref={subtitleRef} className="font-micro text-xs text-accent-green uppercase tracking-widest block mb-2 font-bold select-none opacity-0">
               THE TRANSFORMATION
             </span>
-            <h2 className="font-display text-4xl md:text-5xl font-extrabold text-white leading-tight text-balance">
-              Premises
-              <br />
-              Transformation.
+            <h2 
+              ref={titleRef}
+              className="font-display text-4xl md:text-5xl font-extrabold text-white leading-tight text-balance"
+            >
+              <span className="block overflow-hidden relative py-0.5">
+                <span className="block translate-y-[105%] select-none">Premises</span>
+              </span>
+              <span className="block overflow-hidden relative py-0.5">
+                <span className="block translate-y-[105%] select-none">Transformation.</span>
+              </span>
             </h2>
           </div>
           <div>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter_Tight } from "next/font/google";
 import "./globals.css";
 import SmoothScroller from "@/components/layout/SmoothScroller";
+import AmbientLight from "@/components/ui/AmbientLight";
 
 const interTight = Inter_Tight({
   variable: "--font-inter-tight",
@@ -37,6 +38,10 @@ export default function RootLayout({
       <body
         className={`${interTight.variable} font-body bg-black text-text-primary antialiased selection:bg-accent-blue/30 selection:text-white`}
       >
+        {/* Global tactile noise and visual ambient lighting elements */}
+        <div className="noise-overlay" />
+        <AmbientLight />
+
         <SmoothScroller>{children}</SmoothScroller>
       </body>
     </html>
