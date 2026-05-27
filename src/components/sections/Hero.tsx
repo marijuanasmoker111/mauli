@@ -101,7 +101,7 @@ export default function Hero() {
       id="home"
       ref={containerRef}
       role="banner"
-      className="relative min-h-screen md:h-screen w-full overflow-hidden bg-[#060708] text-[#f8f9fa] flex flex-col justify-start md:justify-center pt-36 md:pt-0 pb-24 px-6 md:px-12 lg:px-24"
+      className="relative min-h-screen w-full overflow-hidden bg-[#060708] text-[#f8f9fa] flex flex-col justify-start pt-44 md:pt-52 pb-24 px-6 md:px-12 lg:px-24"
     >
       <Header />
 
