@@ -55,7 +55,7 @@ export default function Contact() {
           <div className="flex flex-col h-full justify-between text-left">
             <div>
               <span className="font-micro text-xs text-[#c5a880] uppercase tracking-[0.25em] block mb-3 font-bold">
-                LET'S CONNECT
+                LET&apos;S CONNECT
               </span>
               <h2 className="font-display text-4xl sm:text-5xl md:text-[5.5vw] font-black text-white mb-8 tracking-tighter uppercase leading-[0.95]">
                 Get in
@@ -120,7 +120,7 @@ export default function Contact() {
 
             {/* Board of Directors Sub-Grid (Page 11 facts) */}
             <div className="mt-12 pt-8 border-t border-white/10">
-              <span className="block font-micro text-[8px] text-white/30 uppercase tracking-widest mb-4">DIRECTORS' CONTACT</span>
+              <span className="block font-micro text-[8px] text-white/30 uppercase tracking-widest mb-4">DIRECTORS&apos; CONTACT</span>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 font-micro text-[10px] text-left overflow-hidden">
                 <div className="border-l border-[#c5a880]/30 pl-3 break-words">
                   <span className="block text-white/40 uppercase text-[8px] mb-0.5">Owner</span>
