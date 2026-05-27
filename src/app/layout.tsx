@@ -17,6 +17,13 @@ export const metadata: Metadata = {
     "Leading industrial flooring service provider since 2008. Specializing in epoxy flooring, polyurethane coating, clean room finishing, and car parking flooring for pharmaceutical and manufacturing industries.",
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#0f131d",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -25,7 +32,6 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <head>
-        <meta name="theme-color" content="#0f131d" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <link
           rel="preload"
