@@ -14,6 +14,93 @@ export default function Home() {
     <main className="relative min-h-screen bg-[#050505] overflow-x-hidden selection:bg-accent-blue/30 selection:text-white">
       {/* Global Interactions */}
       <CustomCursor />
+
+      {/* Schema.org Structured JSON-LD Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([
+            {
+              "@context": "https://schema.org",
+              "@type": "Corporation",
+              "name": "Mauli Enterprises",
+              "legalName": "Mauli Enterprises",
+              "url": "https://maulienterprises.com",
+              "logo": "https://maulienterprises.com/images/hd_cleanroom_floor.png",
+              "foundingDate": "2008",
+              "founder": {
+                "@type": "Person",
+                "name": "Mr. Dnyaneshwar B. Mhaske"
+              },
+              "knowsAbout": [
+                "Epoxy Flooring",
+                "Polyurethane Flooring",
+                "Clean Room Coving",
+                "Anti Fungal Wall Paints",
+                "Anti Corrosion Coatings",
+                "Car Parking Flooring",
+                "Industrial Tank Linings"
+              ],
+              "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "IN",
+                "addressLocality": "Pune",
+                "addressRegion": "Maharashtra"
+              }
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "HomeAndConstructionBusiness",
+              "name": "Mauli Enterprises",
+              "description": "Leading industrial flooring & protective coatings service provider since 2008. Premium Epoxy flooring, heavy-duty Polyurethane coatings, hygienic cleanroom coving, anti-fungal paints, and commercial car parking floors.",
+              "image": "https://maulienterprises.com/images/hd_cleanroom_floor.png",
+              "url": "https://maulienterprises.com",
+              "telephone": "+919822606555",
+              "priceRange": "$$$",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Pune & Indore Facilities",
+                "addressLocality": "Pune",
+                "addressRegion": "Maharashtra",
+                "postalCode": "411001",
+                "addressCountry": "IN"
+              },
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": "18.5204",
+                "longitude": "73.8567"
+              },
+              "openingHoursSpecification": {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday",
+                  "Saturday"
+                ],
+                "opens": "09:00",
+                "closes": "18:00"
+              },
+              "areaServed": [
+                {
+                  "@type": "AdministrativeArea",
+                  "name": "Maharashtra"
+                },
+                {
+                  "@type": "AdministrativeArea",
+                  "name": "Madhya Pradesh"
+                },
+                {
+                  "@type": "AdministrativeArea",
+                  "name": "India"
+                }
+              ]
+            }
+          ])
+        }}
+      />
       
       {/* Page Loader */}
       <Loader />
