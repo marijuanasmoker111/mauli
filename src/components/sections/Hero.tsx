@@ -101,7 +101,7 @@ export default function Hero() {
       id="home"
       ref={containerRef}
       role="banner"
-      className="relative min-h-screen md:h-screen w-full overflow-hidden bg-[#060708] text-[#f8f9fa] flex flex-col justify-center pt-28 md:pt-36 pb-24 px-6 md:px-12 lg:px-24"
+      className="relative min-h-screen md:h-screen w-full overflow-hidden bg-[#060708] text-[#f8f9fa] flex flex-col justify-start md:justify-center pt-36 md:pt-0 pb-24 px-6 md:px-12 lg:px-24"
     >
       <Header />
 
@@ -129,7 +129,7 @@ export default function Hero() {
         <span>EST. 2008</span>
       </div>
 
-      <div className="relative z-10 max-w-5xl text-left mt-12 md:mt-0 select-none">
+      <div className="relative z-10 max-w-5xl text-left mt-8 md:mt-0 select-none">
         <h1 
           ref={titleRef} 
           className="font-display font-black fluid-heading-xl mb-6 leading-[1.0] tracking-tighter uppercase"

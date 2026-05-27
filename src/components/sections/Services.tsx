@@ -25,23 +25,37 @@ export default function Services() {
           const subtitle = slide.querySelector(".reveal-subtitle");
           const specs = slide.querySelectorAll(".reveal-spec");
 
-          const tl = gsap.timeline({
-            scrollTrigger: {
-              trigger: slide,
-              start: "top 75%",
-              toggleActions: "play none none none",
+          // To achieve absolute graceful degradation, we do NOT hide the elements on mount.
+          // Instead, we only run the reveal animation inside the onEnter callback when ScrollTrigger fires.
+          // If ScrollTrigger fails to fire on mobile, the elements remain 100% visible!
+          ScrollTrigger.create({
+            trigger: slide,
+            start: "top 85%",
+            once: true,
+            onEnter: () => {
+              const tl = gsap.timeline();
+              if (title) {
+                tl.fromTo(title, 
+                  { yPercent: 40, opacity: 0 }, 
+                  { yPercent: 0, opacity: 1, duration: 0.7, ease: "power3.out" }
+                );
+              }
+              if (subtitle) {
+                tl.fromTo(subtitle, 
+                  { opacity: 0, y: 15 }, 
+                  { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 
+                  "-=0.4"
+                );
+              }
+              if (specs.length > 0) {
+                tl.fromTo(specs, 
+                  { opacity: 0, y: 12 }, 
+                  { opacity: 1, y: 0, stagger: 0.06, duration: 0.4, ease: "power2.out" }, 
+                  "-=0.3"
+                );
+              }
             }
           });
-
-          if (title) {
-            tl.fromTo(title, { yPercent: 105 }, { yPercent: 0, duration: 0.8, ease: "power3.out" });
-          }
-          if (subtitle) {
-            tl.fromTo(subtitle, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, "-=0.5");
-          }
-          if (specs.length > 0) {
-            tl.fromTo(specs, { opacity: 0, x: -10 }, { opacity: 1, x: 0, stagger: 0.08, duration: 0.5, ease: "power2.out" }, "-=0.4");
-          }
         });
       } else {
         // Desktop Layout (>= 768px): Pinned full-screen slide deck
@@ -151,7 +165,7 @@ export default function Services() {
           </div>
 
           {/* Top Bar with Number indicator and Crosshairs */}
-          <div className="relative z-10 flex justify-between items-center border-b border-white/10 pb-4 w-full">
+          <div className="relative z-20 flex justify-between items-center border-b border-white/10 pb-4 w-full">
             {/* Corner crosshairs */}
             <div className="absolute bottom-[-5px] left-0 font-mono text-[9px] text-white/20 select-none pointer-events-none">+</div>
             <div className="absolute bottom-[-5px] right-0 font-mono text-[9px] text-white/20 select-none pointer-events-none">+</div>
@@ -166,9 +180,9 @@ export default function Services() {
           </div>
 
           {/* Main Info */}
-          <div className="relative z-10 max-w-4xl mt-auto mb-4 sm:mb-12">
+          <div className="relative z-20 max-w-4xl mt-auto mb-4 sm:mb-12">
             <h2 className="font-display text-2xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-4 sm:mb-6 leading-[1.1] tracking-tight text-balance text-left overflow-hidden py-1">
-              <span className="block translate-y-[105%] reveal-title select-none">
+              <span className="block reveal-title select-none">
                 {service.title}
               </span>
             </h2>
