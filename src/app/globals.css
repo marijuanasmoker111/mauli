@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg-base: #060708;
-  --color-surface: #0c0e12;
+  --color-bg-base: #0a0d14; /* Soft midnight slate for premium contrast layers */
+  --color-surface: #121622; /* High-end slate surface */
   --color-accent-blue: #c5a880; /* Luxurious Architectural Bronze/Gold */
   --color-accent-green: #9fb89b; /* Muted Sage Green */
   --color-accent-orange: #d28c5a; /* Natural Terracotta/Clay */
   --color-text-primary: #f5f6f7;
-  --color-text-muted: rgba(245, 246, 247, 0.45);
+  --color-text-muted: rgba(245, 246, 247, 0.65); /* Raised to 65% for excellent legibility */
 
   --font-display: "General Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-section: "Cabinet Grotesk", sans-serif;
@@ -17,13 +17,13 @@
 
 @layer base {
   :root {
-    --bg-base: #060708;
-    --surface: #0c0e12;
+    --bg-base: #0a0d14;
+    --surface: #121622;
     --accent-blue: #c5a880;
     --accent-green: #9fb89b;
     --accent-orange: #d28c5a;
     --text-primary: #f5f6f7;
-    --text-muted: rgba(245, 246, 247, 0.45);
+    --text-muted: rgba(245, 246, 247, 0.65);
   }
 
   body {

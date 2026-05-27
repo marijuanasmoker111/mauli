@@ -113,12 +113,12 @@ export default function Hero() {
           fill
           quality={85}
           fetchPriority="high"
-          className="object-cover object-center opacity-60 mix-blend-luminosity"
+          className="object-cover object-center opacity-75"
           priority
         />
         {/* Soft elegant gradient overlays */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#060708]/90 via-transparent to-[#060708]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#060708] via-[#060708]/60 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-bg-base/75 via-transparent to-bg-base" />
+        <div className="absolute inset-0 bg-gradient-to-r from-bg-base/80 via-bg-base/35 to-transparent" />
       </div>
 
       {/* Architectural Meta Tag */}

@@ -114,12 +114,12 @@ export default function Services() {
                 src={service.image}
                 alt={service.title}
                 fill
-                className="object-cover opacity-25 sm:opacity-35 mix-blend-luminosity"
+                className="object-cover opacity-45 sm:opacity-55"
                 {...(idx > 0 ? { loading: "lazy" } : { priority: true })}
               />
             </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/75 to-transparent z-10" />
-            <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black/30 z-10" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-transparent z-10" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black/20 z-10" />
           </div>
 
           {/* Top Bar with Number indicator and Crosshairs */}

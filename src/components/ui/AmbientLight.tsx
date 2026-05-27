@@ -44,14 +44,14 @@ export default function AmbientLight() {
       {!isTouchDevice && (
         <div
           ref={mouseBlobRef}
-          className="fixed top-0 left-0 w-[40vw] h-[40vw] rounded-full bg-[#c5a880]/3.5 blur-[120px] mix-blend-screen opacity-90 will-change-transform pointer-events-none"
+          className="fixed top-0 left-0 w-[40vw] h-[40vw] rounded-full bg-[#c5a880]/5.5 blur-[100px] mix-blend-screen opacity-90 will-change-transform pointer-events-none"
         />
       )}
 
       {/* 2. Deep static backdrop layers (Golden/Bronze, Sage green, Terracotta) */}
-      <div className="absolute top-[10%] right-[5%] w-[45vw] h-[45vw] rounded-full bg-[#c5a880]/2.5 blur-[160px] mix-blend-screen pointer-events-none" />
-      <div className="absolute bottom-[20%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-[#9fb89b]/2 blur-[180px] mix-blend-screen pointer-events-none" />
-      <div className="absolute top-[50%] left-[40%] w-[40vw] h-[40vw] rounded-full bg-[#d28c5a]/1.8 blur-[150px] mix-blend-screen pointer-events-none" />
+      <div className="absolute top-[10%] right-[5%] w-[45vw] h-[45vw] rounded-full bg-[#c5a880]/4.5 blur-[140px] mix-blend-screen pointer-events-none" />
+      <div className="absolute bottom-[20%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-[#9fb89b]/4 blur-[150px] mix-blend-screen pointer-events-none" />
+      <div className="absolute top-[50%] left-[40%] w-[40vw] h-[40vw] rounded-full bg-[#d28c5a]/3.5 blur-[120px] mix-blend-screen pointer-events-none" />
     </div>
   );
 }
