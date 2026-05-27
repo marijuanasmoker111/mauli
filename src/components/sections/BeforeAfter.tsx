@@ -17,29 +17,30 @@ export default function BeforeAfter() {
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 85%",
-          toggleActions: "play none none none",
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: "top 85%",
+        once: true,
+        onEnter: () => {
+          const tl = gsap.timeline();
+
+          if (subtitleRef.current) {
+            tl.fromTo(subtitleRef.current,
+              { opacity: 0, y: 15 },
+              { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }
+            );
+          }
+
+          if (titleRef.current) {
+            const titleLines = titleRef.current.querySelectorAll("span > span");
+            tl.fromTo(titleLines,
+              { yPercent: 105 },
+              { yPercent: 0, duration: 1.1, ease: "power4.out", stagger: 0.15 },
+              "-=0.6"
+            );
+          }
         }
       });
-
-      if (subtitleRef.current) {
-        tl.fromTo(subtitleRef.current,
-          { opacity: 0, y: 15 },
-          { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }
-        );
-      }
-
-      if (titleRef.current) {
-        const titleLines = titleRef.current.querySelectorAll("span > span");
-        tl.fromTo(titleLines,
-          { yPercent: 105 },
-          { yPercent: 0, duration: 1.1, ease: "power4.out", stagger: 0.15 },
-          "-=0.6"
-        );
-      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -68,7 +69,7 @@ export default function BeforeAfter() {
         {/* Header Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-end mb-16">
           <div>
-            <span ref={subtitleRef} className="font-micro text-xs text-accent-green uppercase tracking-widest block mb-2 font-bold select-none opacity-0">
+            <span ref={subtitleRef} className="font-micro text-xs text-accent-green uppercase tracking-widest block mb-2 font-bold select-none">
               THE TRANSFORMATION
             </span>
             <h2 
@@ -76,10 +77,10 @@ export default function BeforeAfter() {
               className="font-display text-4xl sm:text-5xl md:text-7xl font-black uppercase leading-[1.0] tracking-tighter text-white"
             >
               <span className="block overflow-hidden relative py-1">
-                <span className="block translate-y-[105%] select-none">Premises</span>
+                <span className="block select-none">Premises</span>
               </span>
               <span className="block overflow-hidden relative py-1">
-                <span className="block translate-y-[105%] select-none">Transformation.</span>
+                <span className="block select-none">Transformation.</span>
               </span>
             </h2>
           </div>

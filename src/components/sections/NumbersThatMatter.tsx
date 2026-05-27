@@ -55,21 +55,23 @@ export default function NumbersThatMatter() {
 
     // Bento grid stagger reveals
     const bentoCtx = gsap.context(() => {
-      gsap.fromTo(".bento-card",
-        { opacity: 0, y: 35 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1.1,
-          ease: "power3.out",
-          stagger: 0.12,
-          scrollTrigger: {
-            trigger: ".bento-grid",
-            start: "top 85%",
-            toggleActions: "play none none none",
-          }
+      ScrollTrigger.create({
+        trigger: ".bento-grid",
+        start: "top 85%",
+        once: true,
+        onEnter: () => {
+          gsap.fromTo(".bento-card",
+            { opacity: 0, y: 35 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 1.1,
+              ease: "power3.out",
+              stagger: 0.12
+            }
+          );
         }
-      );
+      });
     }, containerRef);
 
     return () => bentoCtx.revert();
@@ -99,7 +101,7 @@ export default function NumbersThatMatter() {
         <div className="bento-grid grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           
           {/* Card 1: 11,500 SQM Capacity (Col-span 2) */}
-          <div className="bento-card opacity-0 bg-[#030303]/65 border border-white/5 hover:border-[#c5a880]/30 backdrop-blur-md p-8 md:p-10 flex flex-col justify-between items-start text-left h-64 md:h-72 transition-all duration-500 relative group overflow-hidden md:col-span-2">
+          <div className="bento-card bg-[#030303]/65 border border-white/5 hover:border-[#c5a880]/30 backdrop-blur-md p-8 md:p-10 flex flex-col justify-between items-start text-left h-64 md:h-72 transition-all duration-500 relative group overflow-hidden md:col-span-2">
             {/* Tech crosshairs */}
             <div className="absolute top-2 left-2 font-mono text-[9px] text-white/10 select-none pointer-events-none">+</div>
             <div className="absolute top-2 right-2 font-mono text-[9px] text-white/10 select-none pointer-events-none">+</div>
@@ -133,7 +135,7 @@ export default function NumbersThatMatter() {
           </div>
 
           {/* Card 2: 18+ Years in Business (Col-span 1) */}
-          <div className="bento-card opacity-0 bg-[#030303]/65 border border-white/5 hover:border-[#9fb89b]/30 backdrop-blur-md p-8 md:p-10 flex flex-col justify-between items-start text-left h-64 md:h-72 transition-all duration-500 relative group overflow-hidden md:col-span-1">
+          <div className="bento-card bg-[#030303]/65 border border-white/5 hover:border-[#9fb89b]/30 backdrop-blur-md p-8 md:p-10 flex flex-col justify-between items-start text-left h-64 md:h-72 transition-all duration-500 relative group overflow-hidden md:col-span-1">
             <div className="absolute top-2 left-2 font-mono text-[9px] text-white/10 select-none pointer-events-none">+</div>
             <div className="absolute top-2 right-2 font-mono text-[9px] text-white/10 select-none pointer-events-none">+</div>
             <div className="absolute bottom-2 left-2 font-mono text-[9px] text-white/10 select-none pointer-events-none">+</div>
@@ -165,7 +167,7 @@ export default function NumbersThatMatter() {
           </div>
 
           {/* Card 3: 50+ Employees (Col-span 1) */}
-          <div className="bento-card opacity-0 bg-[#030303]/65 border border-white/5 hover:border-[#d28c5a]/30 backdrop-blur-md p-8 md:p-10 flex flex-col justify-between items-start text-left h-64 md:h-72 transition-all duration-500 relative group overflow-hidden md:col-span-1">
+          <div className="bento-card bg-[#030303]/65 border border-white/5 hover:border-[#d28c5a]/30 backdrop-blur-md p-8 md:p-10 flex flex-col justify-between items-start text-left h-64 md:h-72 transition-all duration-500 relative group overflow-hidden md:col-span-1">
             <div className="absolute top-2 left-2 font-mono text-[9px] text-white/10 select-none pointer-events-none">+</div>
             <div className="absolute top-2 right-2 font-mono text-[9px] text-white/10 select-none pointer-events-none">+</div>
             <div className="absolute bottom-2 left-2 font-mono text-[9px] text-white/10 select-none pointer-events-none">+</div>
@@ -197,7 +199,7 @@ export default function NumbersThatMatter() {
           </div>
 
           {/* Card 4: 17+ Corporate Clients (Col-span 2) */}
-          <div className="bento-card opacity-0 bg-[#030303]/65 border border-white/5 hover:border-white/20 backdrop-blur-md p-8 md:p-10 flex flex-col justify-between items-start text-left h-64 md:h-72 transition-all duration-500 relative group overflow-hidden md:col-span-2">
+          <div className="bento-card bg-[#030303]/65 border border-white/5 hover:border-white/20 backdrop-blur-md p-8 md:p-10 flex flex-col justify-between items-start text-left h-64 md:h-72 transition-all duration-500 relative group overflow-hidden md:col-span-2">
             <div className="absolute top-2 left-2 font-mono text-[9px] text-white/10 select-none pointer-events-none">+</div>
             <div className="absolute top-2 right-2 font-mono text-[9px] text-white/10 select-none pointer-events-none">+</div>
             <div className="absolute bottom-2 left-2 font-mono text-[9px] text-white/10 select-none pointer-events-none">+</div>

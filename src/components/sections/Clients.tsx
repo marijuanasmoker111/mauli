@@ -23,29 +23,30 @@ export default function Clients() {
 
     // Context for scroll-triggered heading reveal
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 80%",
-          toggleActions: "play none none none",
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: "top 80%",
+        once: true,
+        onEnter: () => {
+          const tl = gsap.timeline();
+
+          if (subtitleRef.current) {
+            tl.fromTo(subtitleRef.current,
+              { opacity: 0, y: 15 },
+              { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }
+            );
+          }
+
+          if (titleRef.current) {
+            const titleLines = titleRef.current.querySelectorAll("span > span");
+            tl.fromTo(titleLines,
+              { yPercent: 105 },
+              { yPercent: 0, duration: 1.1, ease: "power4.out", stagger: 0.12 },
+              "-=0.65"
+            );
+          }
         }
       });
-
-      if (subtitleRef.current) {
-        tl.fromTo(subtitleRef.current,
-          { opacity: 0, y: 15 },
-          { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }
-        );
-      }
-
-      if (titleRef.current) {
-        const titleLines = titleRef.current.querySelectorAll("span > span");
-        tl.fromTo(titleLines,
-          { yPercent: 105 },
-          { yPercent: 0, duration: 1.1, ease: "power4.out", stagger: 0.12 },
-          "-=0.65"
-        );
-      }
     }, sectionRef);
 
     // Left-to-right marquee (Very slow and elegant)
@@ -124,7 +125,7 @@ export default function Clients() {
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-24 mb-20 w-full text-left">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10">
           <div className="max-w-4xl">
-            <span ref={subtitleRef} className="font-micro text-xs text-[#c5a880] uppercase tracking-[0.25em] block mb-4 font-bold select-none opacity-0">
+            <span ref={subtitleRef} className="font-micro text-xs text-[#c5a880] uppercase tracking-[0.25em] block mb-4 font-bold select-none">
               ESTABLISHED TRUST & PORTFOLIO
             </span>
             <h2 
@@ -132,13 +133,13 @@ export default function Clients() {
               className="font-display text-4xl sm:text-5xl md:text-8xl font-black leading-[0.95] tracking-tighter uppercase text-white"
             >
               <span className="block overflow-hidden relative py-1">
-                <span className="block translate-y-[105%] select-none">Surface Integrity</span>
+                <span className="block select-none">Surface Integrity</span>
               </span>
               <span className="block overflow-hidden relative py-1">
-                <span className="block translate-y-[105%] select-none">Engineered For The</span>
+                <span className="block select-none">Engineered For The</span>
               </span>
               <span className="block overflow-hidden relative py-1">
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#c5a880] via-[#f8f9fa] to-[#9fb89b] translate-y-[105%] select-none">
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#c5a880] via-[#f8f9fa] to-[#9fb89b] select-none">
                   Giants of Industry.
                 </span>
               </span>

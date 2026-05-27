@@ -12,21 +12,38 @@ export default function About() {
 
     if (!containerRef.current) return;
     const statements = gsap.utils.toArray(".statement-item") as HTMLElement[];
+    const isMobile = window.innerWidth < 768;
 
     statements.forEach((statement) => {
-      gsap.fromTo(statement,
-        { opacity: 0.05, y: 40 },
-        {
-          opacity: 1,
-          y: 0,
-          scrollTrigger: {
-            trigger: statement,
-            start: "top 80%",
-            end: "top 45%",
-            scrub: true,
+      if (isMobile) {
+        // Mobile layout: animate statement on viewport entrance, fail-safe (starts fully visible)
+        ScrollTrigger.create({
+          trigger: statement,
+          start: "top 90%",
+          once: true,
+          onEnter: () => {
+            gsap.fromTo(statement,
+              { opacity: 0.3, y: 20 },
+              { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }
+            );
           }
-        }
-      );
+        });
+      } else {
+        // Desktop Layout: Scrubbing reveal
+        gsap.fromTo(statement,
+          { opacity: 0.05, y: 40 },
+          {
+            opacity: 1,
+            y: 0,
+            scrollTrigger: {
+              trigger: statement,
+              start: "top 80%",
+              end: "top 45%",
+              scrub: true,
+            }
+          }
+        );
+      }
     });
 
     // Animate the main intro block
@@ -35,20 +52,20 @@ export default function About() {
       const sub = intro.querySelector(".reveal-intro-sub");
       const title = intro.querySelector(".reveal-intro-title");
       
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: intro,
-          start: "top 85%",
-          toggleActions: "play none none none",
+      ScrollTrigger.create({
+        trigger: intro,
+        start: "top 85%",
+        once: true,
+        onEnter: () => {
+          const tl = gsap.timeline();
+          if (sub) {
+            tl.fromTo(sub, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6 });
+          }
+          if (title) {
+            tl.fromTo(title, { yPercent: 105 }, { yPercent: 0, duration: 0.9, ease: "power4.out" }, "-=0.4");
+          }
         }
       });
-      
-      if (sub) {
-        tl.fromTo(sub, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6 });
-      }
-      if (title) {
-        tl.fromTo(title, { yPercent: 105 }, { yPercent: 0, duration: 0.9, ease: "power4.out" }, "-=0.4");
-      }
     }
 
   }, []);
@@ -67,11 +84,11 @@ export default function About() {
         
         {/* Conceptual introduction HUD block */}
         <div className="max-w-2xl mb-12 md:mb-24 text-left reveal-intro">
-          <span className="reveal-intro-sub font-micro text-[10px] text-accent-orange tracking-widest uppercase block mb-1 opacity-0 select-none">
+          <span className="reveal-intro-sub font-micro text-[10px] text-accent-orange tracking-widest uppercase block mb-1 select-none">
             COMPANY LEADERSHIP & FOUNDATION
           </span>
           <h2 className="font-display text-2xl md:text-3xl font-extrabold uppercase text-white leading-none overflow-hidden relative py-0.5">
-            <span className="block translate-y-[105%] reveal-intro-title select-none">About Mauli Enterprises</span>
+            <span className="block reveal-intro-title select-none">About Mauli Enterprises</span>
           </h2>
         </div>
 
