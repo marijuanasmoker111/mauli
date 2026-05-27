@@ -80,7 +80,7 @@ export default function NumbersThatMatter() {
   return (
     <section
       ref={containerRef}
-      className="relative py-20 md:py-28 lg:py-36 bg-[#030303] text-white overflow-hidden border-y border-white/5 bg-dot-grid transition-colors duration-1000"
+      className="relative py-20 md:py-28 lg:py-36 bg-bg-base text-white overflow-hidden border-y border-white/5 bg-dot-grid transition-colors duration-1000"
     >
       {/* Visual cyber mesh overlays */}
       <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_50%_50%,_var(--tw-gradient-stops))] from-[#c5a880]/5 via-transparent to-transparent pointer-events-none" />
@@ -101,7 +101,7 @@ export default function NumbersThatMatter() {
         <div className="bento-grid grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           
           {/* Card 1: 11,500 SQM Capacity (Col-span 2) */}
-          <div className="bento-card bg-[#030303]/65 border border-white/5 hover:border-[#c5a880]/30 backdrop-blur-md p-8 md:p-10 flex flex-col justify-between items-start text-left h-64 md:h-72 transition-all duration-500 relative group overflow-hidden md:col-span-2">
+          <div className="bento-card bg-surface/50 border border-white/5 hover:border-[#c5a880]/30 backdrop-blur-md p-8 md:p-10 flex flex-col justify-between items-start text-left h-64 md:h-72 transition-all duration-500 relative group overflow-hidden md:col-span-2">
             {/* Tech crosshairs */}
             <div className="absolute top-2 left-2 font-mono text-[9px] text-white/10 select-none pointer-events-none">+</div>
             <div className="absolute top-2 right-2 font-mono text-[9px] text-white/10 select-none pointer-events-none">+</div>
@@ -135,7 +135,7 @@ export default function NumbersThatMatter() {
           </div>
 
           {/* Card 2: 18+ Years in Business (Col-span 1) */}
-          <div className="bento-card bg-[#030303]/65 border border-white/5 hover:border-[#9fb89b]/30 backdrop-blur-md p-8 md:p-10 flex flex-col justify-between items-start text-left h-64 md:h-72 transition-all duration-500 relative group overflow-hidden md:col-span-1">
+          <div className="bento-card bg-surface/50 border border-white/5 hover:border-[#9fb89b]/30 backdrop-blur-md p-8 md:p-10 flex flex-col justify-between items-start text-left h-64 md:h-72 transition-all duration-500 relative group overflow-hidden md:col-span-1">
             <div className="absolute top-2 left-2 font-mono text-[9px] text-white/10 select-none pointer-events-none">+</div>
             <div className="absolute top-2 right-2 font-mono text-[9px] text-white/10 select-none pointer-events-none">+</div>
             <div className="absolute bottom-2 left-2 font-mono text-[9px] text-white/10 select-none pointer-events-none">+</div>
@@ -167,7 +167,7 @@ export default function NumbersThatMatter() {
           </div>
 
           {/* Card 3: 50+ Employees (Col-span 1) */}
-          <div className="bento-card bg-[#030303]/65 border border-white/5 hover:border-[#d28c5a]/30 backdrop-blur-md p-8 md:p-10 flex flex-col justify-between items-start text-left h-64 md:h-72 transition-all duration-500 relative group overflow-hidden md:col-span-1">
+          <div className="bento-card bg-surface/50 border border-white/5 hover:border-[#d28c5a]/30 backdrop-blur-md p-8 md:p-10 flex flex-col justify-between items-start text-left h-64 md:h-72 transition-all duration-500 relative group overflow-hidden md:col-span-1">
             <div className="absolute top-2 left-2 font-mono text-[9px] text-white/10 select-none pointer-events-none">+</div>
             <div className="absolute top-2 right-2 font-mono text-[9px] text-white/10 select-none pointer-events-none">+</div>
             <div className="absolute bottom-2 left-2 font-mono text-[9px] text-white/10 select-none pointer-events-none">+</div>
@@ -199,7 +199,7 @@ export default function NumbersThatMatter() {
           </div>
 
           {/* Card 4: 17+ Corporate Clients (Col-span 2) */}
-          <div className="bento-card bg-[#030303]/65 border border-white/5 hover:border-white/20 backdrop-blur-md p-8 md:p-10 flex flex-col justify-between items-start text-left h-64 md:h-72 transition-all duration-500 relative group overflow-hidden md:col-span-2">
+          <div className="bento-card bg-surface/50 border border-white/5 hover:border-white/20 backdrop-blur-md p-8 md:p-10 flex flex-col justify-between items-start text-left h-64 md:h-72 transition-all duration-500 relative group overflow-hidden md:col-span-2">
             <div className="absolute top-2 left-2 font-mono text-[9px] text-white/10 select-none pointer-events-none">+</div>
             <div className="absolute top-2 right-2 font-mono text-[9px] text-white/10 select-none pointer-events-none">+</div>
             <div className="absolute bottom-2 left-2 font-mono text-[9px] text-white/10 select-none pointer-events-none">+</div>

@@ -42,7 +42,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="relative py-20 md:py-32 lg:py-44 bg-[#030303] text-white overflow-hidden border-t border-white/5">
+    <section id="contact" className="relative py-20 md:py-32 lg:py-44 bg-bg-base text-white overflow-hidden border-t border-white/5">
       
       {/* Golden/Bronze ambient blurred glows in the background for a luxurious feel */}
       <div className="absolute top-1/4 left-10 w-96 h-96 bg-[#c5a880]/3 rounded-full blur-[180px] pointer-events-none" />

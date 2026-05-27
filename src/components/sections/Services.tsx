@@ -141,11 +141,11 @@ export default function Services() {
   }, []);
 
   return (
-    <div id="services" ref={containerRef} className="relative min-h-screen md:h-screen bg-[#050505] md:overflow-hidden">
+    <div id="services" ref={containerRef} className="relative min-h-screen md:h-screen bg-bg-base md:overflow-hidden">
       {services.map((service, idx) => (
         <section
           key={service.id}
-          className="service-slide relative md:absolute md:inset-0 w-full min-h-[85vh] md:h-full flex flex-col justify-between p-6 sm:p-10 md:p-16 lg:p-24 bg-black border-b border-white/5 md:border-b-0"
+          className="service-slide relative md:absolute md:inset-0 w-full min-h-[85vh] md:h-full flex flex-col justify-between p-6 sm:p-10 md:p-16 lg:p-24 bg-surface border-b border-white/5 md:border-b-0"
           style={{ zIndex: idx + 1 }}
           aria-label={`Service: ${service.title}`}
         >
@@ -160,8 +160,8 @@ export default function Services() {
                 {...(idx > 0 ? { loading: "lazy" } : { priority: true })}
               />
             </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-transparent z-10" />
-            <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black/20 z-10" />
+            <div className="absolute inset-0 bg-gradient-to-t from-bg-base via-bg-base/55 to-transparent z-10" />
+            <div className="absolute inset-0 bg-gradient-to-r from-bg-base via-transparent to-bg-base/20 z-10" />
           </div>
 
           {/* Top Bar with Number indicator and Crosshairs */}

@@ -74,7 +74,7 @@ export default function About() {
     <section 
       id="leadership"
       ref={containerRef}
-      className="relative py-20 md:py-32 lg:py-48 bg-[#030303] text-white overflow-hidden border-b border-white/5 bg-dot-grid"
+      className="relative py-20 md:py-32 lg:py-48 bg-bg-base text-white overflow-hidden border-b border-white/5 bg-dot-grid"
     >
       {/* Background cyber accent vectors */}
       <div className="absolute inset-y-0 left-12 w-px bg-white/5 hidden md:block" />
@@ -87,7 +87,7 @@ export default function About() {
           <span className="reveal-intro-sub font-micro text-[10px] text-accent-orange tracking-widest uppercase block mb-1 select-none">
             COMPANY LEADERSHIP & FOUNDATION
           </span>
-          <h2 className="font-display text-2xl md:text-3xl font-extrabold uppercase text-white leading-none overflow-hidden relative py-0.5">
+          <h2 className="font-display text-2xl md:text-3xl font-extrabold uppercase text-white leading-[1.15] overflow-hidden relative pb-2 pt-1">
             <span className="block reveal-intro-title select-none">About Mauli Enterprises</span>
           </h2>
         </div>

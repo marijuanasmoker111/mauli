@@ -112,7 +112,7 @@ export default function Clients() {
     <section 
       id="clients" 
       ref={sectionRef}
-      className="relative py-20 md:py-32 lg:py-44 bg-[#030303] text-white overflow-hidden border-b border-white/5 flex flex-col justify-center select-none"
+      className="relative py-20 md:py-32 lg:py-44 bg-bg-base text-white overflow-hidden border-b border-white/5 flex flex-col justify-center select-none"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -130,15 +130,15 @@ export default function Clients() {
             </span>
             <h2 
               ref={titleRef}
-              className="font-display text-4xl sm:text-5xl md:text-8xl font-black leading-[0.95] tracking-tighter uppercase text-white"
+              className="font-display text-4xl sm:text-5xl md:text-8xl font-black leading-[1.1] tracking-tighter uppercase text-white"
             >
-              <span className="block overflow-hidden relative py-1">
+              <span className="block overflow-hidden relative pb-3 pt-1">
                 <span className="block select-none">Surface Integrity</span>
               </span>
-              <span className="block overflow-hidden relative py-1">
+              <span className="block overflow-hidden relative pb-3 pt-1">
                 <span className="block select-none">Engineered For The</span>
               </span>
-              <span className="block overflow-hidden relative py-1">
+              <span className="block overflow-hidden relative pb-3 pt-1">
                 <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#c5a880] via-[#f8f9fa] to-[#9fb89b] select-none">
                   Giants of Industry.
                 </span>

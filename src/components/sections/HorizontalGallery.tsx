@@ -67,7 +67,7 @@ export default function HorizontalGallery() {
   }, []);
 
   return (
-    <div id="gallery" className="relative bg-[#030303] bg-dot-grid border-b border-white/5">
+    <div id="gallery" className="relative bg-bg-base bg-dot-grid border-b border-white/5">
 
       {/* ====== MOBILE LAYOUT: Stacked vertical cards (<768px) ====== */}
       <section className="md:hidden px-5 py-16 space-y-6">

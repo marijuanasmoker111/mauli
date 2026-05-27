@@ -63,7 +63,7 @@ export default function BeforeAfter() {
   };
 
   return (
-    <section ref={sectionRef} className="relative py-24 md:py-36 bg-[#050505] text-white overflow-hidden border-b border-white/5">
+    <section ref={sectionRef} className="relative py-24 md:py-36 bg-bg-base text-white overflow-hidden border-b border-white/5">
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
         
         {/* Header Grid */}
@@ -74,12 +74,12 @@ export default function BeforeAfter() {
             </span>
             <h2 
               ref={titleRef}
-              className="font-display text-4xl sm:text-5xl md:text-7xl font-black uppercase leading-[1.0] tracking-tighter text-white"
+              className="font-display text-4xl sm:text-5xl md:text-7xl font-black uppercase leading-[1.1] tracking-tighter text-white"
             >
-              <span className="block overflow-hidden relative py-1">
+              <span className="block overflow-hidden relative pb-3 pt-1">
                 <span className="block select-none">Premises</span>
               </span>
-              <span className="block overflow-hidden relative py-1">
+              <span className="block overflow-hidden relative pb-3 pt-1">
                 <span className="block select-none">Transformation.</span>
               </span>
             </h2>

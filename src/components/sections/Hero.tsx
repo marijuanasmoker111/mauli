@@ -101,7 +101,7 @@ export default function Hero() {
       id="home"
       ref={containerRef}
       role="banner"
-      className="relative min-h-screen w-full overflow-hidden bg-[#060708] text-[#f8f9fa] flex flex-col justify-start pt-44 md:pt-52 pb-24 px-6 md:px-12 lg:px-24"
+      className="relative min-h-screen w-full overflow-hidden bg-bg-base text-[#f8f9fa] flex flex-col justify-start pt-44 md:pt-52 pb-24 px-6 md:px-12 lg:px-24"
     >
       <Header />
 
@@ -132,12 +132,12 @@ export default function Hero() {
       <div className="relative z-10 max-w-5xl text-left mt-8 md:mt-0 select-none">
         <h1 
           ref={titleRef} 
-          className="font-display font-black fluid-heading-xl mb-6 leading-[1.0] tracking-tighter uppercase"
+          className="font-display font-black fluid-heading-xl mb-6 leading-[1.1] tracking-tighter uppercase"
         >
-          <span className="block overflow-hidden relative py-1">
+          <span className="block overflow-hidden relative pb-3 pt-1">
             <span className="block text-white select-none">Precision Surfaces.</span>
           </span>
-          <span className="block overflow-hidden relative py-1">
+          <span className="block overflow-hidden relative pb-3 pt-1">
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#c5a880] via-[#e2cda3] to-[#c5a880] select-none">
               Performance Spaces.
             </span>

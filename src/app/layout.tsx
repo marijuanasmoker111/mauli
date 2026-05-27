@@ -36,7 +36,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${interTight.variable} font-body bg-black text-text-primary antialiased selection:bg-accent-blue/30 selection:text-white`}
+        className={`${interTight.variable} font-body bg-bg-base text-text-primary antialiased selection:bg-accent-blue/30 selection:text-white`}
       >
         {/* Global tactile noise and visual ambient lighting elements */}
         <div className="noise-overlay" />
