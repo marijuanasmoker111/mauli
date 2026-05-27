@@ -138,28 +138,28 @@ export default function Services() {
           </div>
 
           {/* Main Info */}
-          <div className="relative z-10 max-w-4xl mt-auto mb-12">
-            <h2 className="font-display text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 uppercase tracking-tight leading-none text-balance text-left overflow-hidden py-1">
+          <div className="relative z-10 max-w-4xl mt-auto mb-4 sm:mb-12">
+            <h2 className="font-display text-2xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-4 sm:mb-6 leading-[1.1] tracking-tight text-balance text-left overflow-hidden py-1">
               <span className="block translate-y-[105%] reveal-title select-none">
                 {service.title}
               </span>
             </h2>
-            <p className="font-body text-text-muted text-base sm:text-xl max-w-2xl mb-12 text-left reveal-subtitle opacity-0 select-none">
+            <p className="font-body text-text-muted text-xs sm:text-base md:text-xl max-w-2xl mb-6 sm:mb-12 text-left reveal-subtitle opacity-0 select-none leading-relaxed">
               {service.subtitle}
             </p>
 
             {/* Spec grid */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 font-micro border-t border-white/10 pt-8 text-left relative">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-3 sm:gap-6 font-micro border-t border-white/10 pt-4 sm:pt-8 text-left relative">
               {/* Corner crosshairs */}
               <div className="absolute top-[-5px] left-0 font-mono text-[9px] text-white/20 select-none pointer-events-none">+</div>
               <div className="absolute top-[-5px] right-0 font-mono text-[9px] text-white/20 select-none pointer-events-none">+</div>
 
               {service.specs.map((spec, sIdx) => (
-                <div key={sIdx} className="reveal-spec border-l border-[#c5a880]/30 pl-4 py-1 opacity-0">
-                  <span className="block text-[9px] text-text-muted uppercase tracking-wider mb-1">
+                <div key={sIdx} className="reveal-spec border-l border-[#c5a880]/30 pl-3 py-0.5 sm:pl-4 sm:py-1 opacity-0">
+                  <span className="block text-[8px] sm:text-[9px] text-text-muted uppercase tracking-wider mb-0.5 sm:mb-1">
                     FEATURE 0{sIdx + 1}
                   </span>
-                  <span className="block text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
+                  <span className="block text-[10px] sm:text-xs md:text-sm font-bold text-white uppercase tracking-wider leading-tight">
                     {spec}
                   </span>
                 </div>
