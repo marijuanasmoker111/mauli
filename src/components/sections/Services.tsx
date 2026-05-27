@@ -13,84 +13,112 @@ export default function Services() {
     gsap.registerPlugin(ScrollTrigger);
     if (!containerRef.current) return;
 
+    const isMobile = window.innerWidth < 768;
+
     const ctx = gsap.context(() => {
       const slides = gsap.utils.toArray(".service-slide") as HTMLElement[];
 
-      // Slide 0 entrance animation on initial page load
-      const slide0 = slides[0];
-      if (slide0) {
-        const title0 = slide0.querySelector(".reveal-title");
-        const subtitle0 = slide0.querySelector(".reveal-subtitle");
-        const specs0 = slide0.querySelectorAll(".reveal-spec");
-        
-        gsap.timeline({ delay: 0.6 })
-          .fromTo(title0, { yPercent: 105 }, { yPercent: 0, duration: 1.1, ease: "power4.out" })
-          .fromTo(subtitle0, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, "-=0.75")
-          .fromTo(specs0, { opacity: 0, x: -15 }, { opacity: 1, x: 0, stagger: 0.1, duration: 0.7, ease: "power3.out" }, "-=0.65");
-      }
+      if (isMobile) {
+        // Mobile layout: simply animate each slide's content when it enters the viewport
+        slides.forEach((slide) => {
+          const title = slide.querySelector(".reveal-title");
+          const subtitle = slide.querySelector(".reveal-subtitle");
+          const specs = slide.querySelectorAll(".reveal-spec");
 
-      // Create a single master timeline pinned to the parent container to prevent overlaps
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          pin: true,
-          pinSpacing: true,
-          scrub: 1,
-          start: "top top",
-          end: () => `+=${window.innerHeight * (slides.length - 1)}`,
-          invalidateOnRefresh: true,
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: slide,
+              start: "top 75%",
+              toggleActions: "play none none none",
+            }
+          });
+
+          if (title) {
+            tl.fromTo(title, { yPercent: 105 }, { yPercent: 0, duration: 0.8, ease: "power3.out" });
+          }
+          if (subtitle) {
+            tl.fromTo(subtitle, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, "-=0.5");
+          }
+          if (specs.length > 0) {
+            tl.fromTo(specs, { opacity: 0, x: -10 }, { opacity: 1, x: 0, stagger: 0.08, duration: 0.5, ease: "power2.out" }, "-=0.4");
+          }
+        });
+      } else {
+        // Desktop Layout (>= 768px): Pinned full-screen slide deck
+        const slide0 = slides[0];
+        if (slide0) {
+          const title0 = slide0.querySelector(".reveal-title");
+          const subtitle0 = slide0.querySelector(".reveal-subtitle");
+          const specs0 = slide0.querySelectorAll(".reveal-spec");
+          
+          gsap.timeline({ delay: 0.6 })
+            .fromTo(title0, { yPercent: 105 }, { yPercent: 0, duration: 1.1, ease: "power4.out" })
+            .fromTo(subtitle0, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, "-=0.75")
+            .fromTo(specs0, { opacity: 0, x: -15 }, { opacity: 1, x: 0, stagger: 0.1, duration: 0.7, ease: "power3.out" }, "-=0.65");
         }
-      });
 
-      // Stagger slide transitions and multi-planar parallax on the master timeline
-      slides.forEach((slide, index) => {
-        if (index === 0) return;
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: containerRef.current,
+            pin: true,
+            pinSpacing: true,
+            scrub: 1,
+            start: "top top",
+            end: () => `+=${window.innerHeight * (slides.length - 1)}`,
+            invalidateOnRefresh: true,
+          }
+        });
 
-        const img = slide.querySelector(".bg-parallax-image");
+        // Stagger slide transitions and multi-planar parallax on the master timeline
+        slides.forEach((slide, index) => {
+          if (index === 0) return;
 
-        // 1. Animate slide panel entering vertically
-        tl.fromTo(slide,
-          { yPercent: 100 },
-          { yPercent: 0, ease: "none" },
-          index - 1
-        );
+          const img = slide.querySelector(".bg-parallax-image");
 
-        // 2. Animate background image translating in opposite direction (parallax depth)
-        if (img) {
-          tl.fromTo(img,
-            { yPercent: -30 },
+          // 1. Animate slide panel entering vertically
+          tl.fromTo(slide,
+            { yPercent: 100 },
             { yPercent: 0, ease: "none" },
             index - 1
           );
-        }
 
-        // 3. Staggered inner text reveals inside the active scroll slide frame
-        const title = slide.querySelector(".reveal-title");
-        const subtitle = slide.querySelector(".reveal-subtitle");
-        const specs = slide.querySelectorAll(".reveal-spec");
+          // 2. Animate background image translating in opposite direction (parallax depth)
+          if (img) {
+            tl.fromTo(img,
+              { yPercent: -30 },
+              { yPercent: 0, ease: "none" },
+              index - 1
+            );
+          }
 
-        if (title) {
-          tl.fromTo(title,
-            { yPercent: 105 },
-            { yPercent: 0, ease: "power2.out" },
-            (index - 1) + 0.15
-          );
-        }
-        if (subtitle) {
-          tl.fromTo(subtitle,
-            { opacity: 0, y: 15 },
-            { opacity: 1, y: 0, ease: "power2.out" },
-            (index - 1) + 0.3
-          );
-        }
-        if (specs.length > 0) {
-          tl.fromTo(specs,
-            { opacity: 0, x: -15 },
-            { opacity: 1, x: 0, stagger: 0.08, ease: "power2.out" },
-            (index - 1) + 0.4
-          );
-        }
-      });
+          // 3. Staggered inner text reveals inside the active scroll slide frame
+          const title = slide.querySelector(".reveal-title");
+          const subtitle = slide.querySelector(".reveal-subtitle");
+          const specs = slide.querySelectorAll(".reveal-spec");
+
+          if (title) {
+            tl.fromTo(title,
+              { yPercent: 105 },
+              { yPercent: 0, ease: "power2.out" },
+              (index - 1) + 0.15
+            );
+          }
+          if (subtitle) {
+            tl.fromTo(subtitle,
+              { opacity: 0, y: 15 },
+              { opacity: 1, y: 0, ease: "power2.out" },
+              (index - 1) + 0.3
+            );
+          }
+          if (specs.length > 0) {
+            tl.fromTo(specs,
+              { opacity: 0, x: -15 },
+              { opacity: 1, x: 0, stagger: 0.08, ease: "power2.out" },
+              (index - 1) + 0.4
+            );
+          }
+        });
+      }
     }, containerRef);
 
     return () => {
@@ -99,11 +127,11 @@ export default function Services() {
   }, []);
 
   return (
-    <div id="services" ref={containerRef} className="relative h-screen bg-[#050505] overflow-hidden">
+    <div id="services" ref={containerRef} className="relative min-h-screen md:h-screen bg-[#050505] md:overflow-hidden">
       {services.map((service, idx) => (
         <section
           key={service.id}
-          className="service-slide absolute inset-0 w-full h-full flex flex-col justify-between p-5 sm:p-8 md:p-16 lg:p-24 bg-black"
+          className="service-slide relative md:absolute md:inset-0 w-full min-h-[85vh] md:h-full flex flex-col justify-between p-6 sm:p-10 md:p-16 lg:p-24 bg-black border-b border-white/5 md:border-b-0"
           style={{ zIndex: idx + 1 }}
           aria-label={`Service: ${service.title}`}
         >
