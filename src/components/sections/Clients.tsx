@@ -122,31 +122,31 @@ export default function Clients() {
 
       {/* Editorial Header */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-24 mb-20 w-full text-left">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
-          <div className="max-w-3xl">
-            <span ref={subtitleRef} className="font-micro text-xs text-[#c5a880] uppercase tracking-[0.25em] block mb-3 font-bold select-none opacity-0">
-              ESTABLISHED PORTFOLIO
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10">
+          <div className="max-w-4xl">
+            <span ref={subtitleRef} className="font-micro text-xs text-[#c5a880] uppercase tracking-[0.25em] block mb-4 font-bold select-none opacity-0">
+              ESTABLISHED TRUST & PORTFOLIO
             </span>
             <h2 
               ref={titleRef}
-              className="font-display text-4xl md:text-6xl font-black leading-tight text-white tracking-tighter uppercase"
+              className="font-display text-4xl sm:text-5xl md:text-7xl font-black leading-[0.95] tracking-tighter uppercase text-white"
             >
-              <span className="block overflow-hidden relative py-0.5">
-                <span className="block translate-y-[105%] select-none">We have done some</span>
+              <span className="block overflow-hidden relative py-1">
+                <span className="block translate-y-[105%] select-none">Surface Integrity</span>
               </span>
-              <span className="block overflow-hidden relative py-0.5">
+              <span className="block overflow-hidden relative py-1">
+                <span className="block translate-y-[105%] select-none">Engineered For The</span>
+              </span>
+              <span className="block overflow-hidden relative py-1">
                 <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#c5a880] via-[#f8f9fa] to-[#9fb89b] translate-y-[105%] select-none">
-                  dynamic projects
+                  Giants of Industry.
                 </span>
-              </span>
-              <span className="block overflow-hidden relative py-0.5">
-                <span className="block translate-y-[105%] select-none">in reputed companies.</span>
               </span>
             </h2>
           </div>
-          <div className="max-w-sm md:mb-2">
-            <p className="font-body text-text-muted text-xs sm:text-sm leading-relaxed border-l border-white/10 pl-6">
-              Our company has successfully delivered high-performance industrial flooring and cleanroom finishing works for standard corporate manufacturing premises across Indore, Pune, and major industrial hubs.
+          <div className="max-w-md lg:mb-2">
+            <p className="font-body text-text-muted text-xs sm:text-sm leading-relaxed border-l border-[#c5a880]/30 pl-6">
+              Mauli Enterprises has successfully executed high-durability surfaces and sterile cleanroom finishes across major FDA-approved industrial corridors for 17+ corporate pharmaceutical titans and manufacturing leaders.
             </p>
           </div>
         </div>
