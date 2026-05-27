@@ -129,7 +129,7 @@ export default function Clients() {
             </span>
             <h2 
               ref={titleRef}
-              className="font-display text-4xl sm:text-5xl md:text-7xl font-black leading-[0.95] tracking-tighter uppercase text-white"
+              className="font-display text-4xl sm:text-5xl md:text-8xl font-black leading-[0.95] tracking-tighter uppercase text-white"
             >
               <span className="block overflow-hidden relative py-1">
                 <span className="block translate-y-[105%] select-none">Surface Integrity</span>

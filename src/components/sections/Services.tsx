@@ -144,7 +144,7 @@ export default function Services() {
                 {service.title}
               </span>
             </h2>
-            <p className="font-body text-text-muted text-xs sm:text-base md:text-xl max-w-2xl mb-6 sm:mb-12 text-left reveal-subtitle opacity-0 select-none leading-relaxed">
+            <p className="font-body text-text-muted text-xs sm:text-base md:text-xl max-w-2xl mb-6 sm:mb-12 text-left reveal-subtitle select-none leading-relaxed">
               {service.subtitle}
             </p>
 
@@ -155,7 +155,7 @@ export default function Services() {
               <div className="absolute top-[-5px] right-0 font-mono text-[9px] text-white/20 select-none pointer-events-none">+</div>
 
               {service.specs.map((spec, sIdx) => (
-                <div key={sIdx} className="reveal-spec border-l border-[#c5a880]/30 pl-3 py-0.5 sm:pl-4 sm:py-1 opacity-0">
+                <div key={sIdx} className="reveal-spec border-l border-[#c5a880]/30 pl-3 py-0.5 sm:pl-4 sm:py-1">
                   <span className="block text-[8px] sm:text-[9px] text-text-muted uppercase tracking-wider mb-0.5 sm:mb-1">
                     FEATURE 0{sIdx + 1}
                   </span>

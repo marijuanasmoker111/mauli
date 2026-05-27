@@ -132,23 +132,23 @@ export default function Hero() {
       <div className="relative z-10 max-w-5xl text-left mt-12 md:mt-0 select-none">
         <h1 
           ref={titleRef} 
-          className="font-display font-bold fluid-heading-xl mb-6 leading-[1.05] tracking-tight"
+          className="font-display font-black fluid-heading-xl mb-6 leading-[1.0] tracking-tighter uppercase"
         >
           <span className="block overflow-hidden relative py-1">
-            <span className="block text-white select-none">Make Happy</span>
+            <span className="block text-white select-none">Precision Surfaces.</span>
           </span>
           <span className="block overflow-hidden relative py-1">
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#c5a880] via-[#e2cda3] to-[#c5a880] select-none">
-              Workplace.
+              Performance Spaces.
             </span>
           </span>
         </h1>
 
         <p 
           ref={subtitleRef}
-          className="font-body text-[#f5f6f7]/70 text-base md:text-lg lg:text-xl max-w-2xl mb-8 md:mb-12 leading-relaxed font-light"
+          className="font-body text-[#f5f6f7]/80 text-base md:text-lg lg:text-xl max-w-2xl mb-8 md:mb-12 leading-relaxed font-light text-left"
         >
-          We transform your work premises into attractive and efficient workplaces. We are one of the leading service providers in Industrial Flooring material supply and application since 2008.
+          We engineer seamless, high-performance industrial flooring and sterile cleanroom surface systems. As a trusted partner for global pharmaceutical and manufacturing leaders since 2008, we deliver uncompromising durability, FDA compliance, and structural integrity.
         </p>
 
         {/* Premium Call to Actions */}

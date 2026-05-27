@@ -73,12 +73,12 @@ export default function BeforeAfter() {
             </span>
             <h2 
               ref={titleRef}
-              className="font-display text-4xl md:text-5xl font-extrabold text-white leading-tight text-balance"
+              className="font-display text-4xl sm:text-5xl md:text-7xl font-black uppercase leading-[1.0] tracking-tighter text-white"
             >
-              <span className="block overflow-hidden relative py-0.5">
+              <span className="block overflow-hidden relative py-1">
                 <span className="block translate-y-[105%] select-none">Premises</span>
               </span>
-              <span className="block overflow-hidden relative py-0.5">
+              <span className="block overflow-hidden relative py-1">
                 <span className="block translate-y-[105%] select-none">Transformation.</span>
               </span>
             </h2>
