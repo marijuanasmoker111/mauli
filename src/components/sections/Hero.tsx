@@ -117,8 +117,8 @@ export default function Hero() {
           priority
         />
         {/* Soft elegant gradient overlays */}
-        <div className="absolute inset-0 bg-gradient-to-b from-bg-base/75 via-transparent to-bg-base" />
-        <div className="absolute inset-0 bg-gradient-to-r from-bg-base/80 via-bg-base/35 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-bg-base/30 md:from-bg-base/75 via-transparent to-bg-base" />
+        <div className="absolute inset-0 bg-gradient-to-r from-bg-base/50 md:from-bg-base/80 via-bg-base/35 to-transparent" />
       </div>
 
       {/* Architectural Meta Tag */}

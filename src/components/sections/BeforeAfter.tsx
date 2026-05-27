@@ -74,13 +74,13 @@ export default function BeforeAfter() {
             </span>
             <h2 
               ref={titleRef}
-              className="font-display text-4xl sm:text-5xl md:text-7xl font-black uppercase leading-[1.1] tracking-tighter text-white"
+              className="font-display text-[8.5vw] xs:text-[7.5vw] sm:text-5xl md:text-7xl font-black uppercase leading-[1.15] tracking-tighter text-white"
             >
               <span className="block overflow-hidden relative pb-3 pt-1">
-                <span className="block select-none">Premises</span>
+                <span className="block select-none whitespace-nowrap">Premises</span>
               </span>
               <span className="block overflow-hidden relative pb-3 pt-1">
-                <span className="block select-none">Transformation.</span>
+                <span className="block select-none whitespace-nowrap">Transformation.</span>
               </span>
             </h2>
           </div>
