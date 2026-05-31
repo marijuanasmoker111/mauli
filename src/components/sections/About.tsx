@@ -15,34 +15,96 @@ export default function About() {
     const isMobile = window.innerWidth < 768;
 
     statements.forEach((statement) => {
+      const heading = statement.querySelector("h2");
+      const sweepDivider = statement.querySelector(".curing-sweep-divider");
+
       if (isMobile) {
-        // Mobile layout: animate statement on viewport entrance, fail-safe (starts fully visible)
+        // Mobile layout: smooth entrance scroll reveal
         ScrollTrigger.create({
           trigger: statement,
-          start: "top 90%",
+          start: "top 88%",
           once: true,
           onEnter: () => {
-            gsap.fromTo(statement,
-              { opacity: 0.3, y: 20 },
+            const tl = gsap.timeline();
+            tl.fromTo(statement,
+              { opacity: 0.25, y: 15 },
               { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }
             );
+            if (sweepDivider) {
+              tl.fromTo(sweepDivider,
+                { scaleX: 0, opacity: 0 },
+                { scaleX: 1, opacity: 1, duration: 1, ease: "power2.out" },
+                "-=0.6"
+              );
+            }
           }
         });
       } else {
-        // Desktop Layout: Scrubbing reveal
-        gsap.fromTo(statement,
-          { opacity: 0.05, y: 40 },
-          {
-            opacity: 1,
-            y: 0,
-            scrollTrigger: {
-              trigger: statement,
-              start: "top 80%",
-              end: "top 45%",
-              scrub: true,
-            }
+        // Desktop Layout: Focus Curing Scrubbing (Uncured fluid -> Cured solid)
+        // 1. Entrance / Curing Timeline: Lights up, disappears blur, and condenses letterSpacing
+        const enterTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: statement,
+            start: "top 82%",      // Enters the focus zone
+            end: "top 52%",        // Reaches full focus in center
+            scrub: true,
+            invalidateOnRefresh: true,
           }
+        });
+
+        enterTl.fromTo(statement, 
+          { opacity: 0.12, filter: "blur(2px)" },
+          { opacity: 1, filter: "blur(0px)", ease: "none" }
         );
+
+        if (heading) {
+          // Condenses molecular structure from loose to high-strength tight
+          enterTl.fromTo(heading,
+            { letterSpacing: "0.08em" },
+            { letterSpacing: "-0.03em", ease: "none" },
+            0
+          );
+        }
+
+        if (sweepDivider) {
+          enterTl.fromTo(sweepDivider,
+            { scaleX: 0, opacity: 0 },
+            { scaleX: 1, opacity: 1, ease: "none" },
+            0
+          );
+        }
+
+        // 2. Exit / Decuring Timeline: Dims and blurs back out as it exits the top
+        const exitTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: statement,
+            start: "top 44%",      // Leaves full focus center
+            end: "top 12%",        // Exits top of viewport
+            scrub: true,
+            invalidateOnRefresh: true,
+          }
+        });
+
+        exitTl.to(statement, {
+          opacity: 0.12,
+          filter: "blur(2.2px)",
+          ease: "none"
+        });
+
+        if (heading) {
+          exitTl.to(heading, {
+            letterSpacing: "0.04em",
+            ease: "none"
+          }, 0);
+        }
+
+        if (sweepDivider) {
+          exitTl.to(sweepDivider, {
+            scaleX: 0,
+            opacity: 0,
+            ease: "none"
+          }, 0);
+        }
       }
     });
 
@@ -95,7 +157,8 @@ export default function About() {
         <div className="flex flex-col gap-16 md:gap-24 lg:gap-36 text-left max-w-5xl">
           
           {/* Statement 1 */}
-          <div className="statement-item flex flex-col md:flex-row md:items-start justify-between gap-6 md:gap-16 border-t border-white/10 pt-10">
+          <div className="statement-item flex flex-col md:flex-row md:items-start justify-between gap-6 md:gap-16 border-t border-white/10 pt-10 relative">
+            <div className="curing-sweep-divider absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#c5a880]/80 to-transparent scale-x-0 origin-center pointer-events-none" />
             <div className="md:w-1/2">
               <span className="font-micro text-[10px] text-accent-orange uppercase tracking-widest block mb-4 font-bold">
                 BUSINESS SINCE 2008
@@ -112,7 +175,8 @@ export default function About() {
           </div>
 
           {/* Statement 2 */}
-          <div className="statement-item flex flex-col md:flex-row md:items-start justify-between gap-6 md:gap-16 border-t border-white/10 pt-10">
+          <div className="statement-item flex flex-col md:flex-row md:items-start justify-between gap-6 md:gap-16 border-t border-white/10 pt-10 relative">
+            <div className="curing-sweep-divider absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#c5a880]/80 to-transparent scale-x-0 origin-center pointer-events-none" />
             <div className="md:w-1/2">
               <span className="font-micro text-[10px] text-accent-blue uppercase tracking-widest block mb-4 font-bold">
                 SERVICE PROVIDER
@@ -129,7 +193,8 @@ export default function About() {
           </div>
 
           {/* Statement 3 */}
-          <div className="statement-item flex flex-col md:flex-row md:items-start justify-between gap-6 md:gap-16 border-t border-white/10 pt-10">
+          <div className="statement-item flex flex-col md:flex-row md:items-start justify-between gap-6 md:gap-16 border-t border-white/10 pt-10 relative">
+            <div className="curing-sweep-divider absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#c5a880]/80 to-transparent scale-x-0 origin-center pointer-events-none" />
             <div className="md:w-1/2">
               <span className="font-micro text-[10px] text-accent-green uppercase tracking-widest block mb-4 font-bold">
                 PHARMACEUTICAL PROJECTS
@@ -146,7 +211,8 @@ export default function About() {
           </div>
 
           {/* Statement 4 */}
-          <div className="statement-item flex flex-col md:flex-row md:items-start justify-between gap-6 md:gap-16 border-t border-white/10 pt-10">
+          <div className="statement-item flex flex-col md:flex-row md:items-start justify-between gap-6 md:gap-16 border-t border-white/10 pt-10 relative">
+            <div className="curing-sweep-divider absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#c5a880]/80 to-transparent scale-x-0 origin-center pointer-events-none" />
             <div className="md:w-1/2">
               <span className="font-micro text-[10px] text-white/50 uppercase tracking-widest block mb-4 font-bold">
                 SERVICES OFFERED
@@ -163,7 +229,8 @@ export default function About() {
           </div>
 
           {/* Statement 5: Leadership Board from PDF page 12 */}
-          <div className="statement-item flex flex-col md:flex-row md:items-start justify-between gap-6 md:gap-16 border-t border-white/10 pt-10">
+          <div className="statement-item flex flex-col md:flex-row md:items-start justify-between gap-6 md:gap-16 border-t border-white/10 pt-10 relative">
+            <div className="curing-sweep-divider absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#c5a880]/80 to-transparent scale-x-0 origin-center pointer-events-none" />
             <div className="md:w-1/2">
               <span className="font-micro text-[10px] text-accent-blue uppercase tracking-widest block mb-4 font-bold">
                 OWNER & DIRECTORS
