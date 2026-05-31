@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import Header from "../layout/Header";
+import { triggerWetPaintRipple } from "@/components/ui/animation";
 
 export default function Hero() {
   const containerRef = useRef<HTMLElement>(null);
@@ -212,12 +213,12 @@ export default function Hero() {
 
         {/* Premium Call to Actions */}
         <div ref={ctaRef} className="flex flex-col sm:flex-row gap-5 font-micro text-[11px] tracking-[0.15em]">
-          <a href="#gallery" className="w-full sm:w-auto min-h-[48px] px-10 py-4 bg-[#c5a880] hover:bg-[#d6b991] text-[#060708] font-bold uppercase transition-all duration-500 ease-out text-center shadow-[0_0_40px_rgba(197,168,128,0.15)] inline-flex items-center justify-center focus-visible:ring-2 focus-visible:ring-[#c5a880] focus-visible:ring-offset-2 focus-visible:ring-offset-[#060708] outline-none">
-            <span>View Project Gallery</span>
+          <a href="#gallery" onClick={triggerWetPaintRipple} className="w-full sm:w-auto min-h-[48px] px-10 py-4 bg-[#c5a880] hover:bg-[#d6b991] text-[#060708] font-bold uppercase transition-all duration-500 ease-out text-center shadow-[0_0_40px_rgba(197,168,128,0.15)] inline-flex items-center justify-center focus-visible:ring-2 focus-visible:ring-[#c5a880] focus-visible:ring-offset-2 focus-visible:ring-offset-[#060708] outline-none relative overflow-hidden">
+            <span className="relative z-10">View Project Gallery</span>
           </a>
           
-          <a href="#contact" className="w-full sm:w-auto min-h-[48px] px-10 py-4 bg-white/5 backdrop-blur-md hover:bg-white/10 text-white font-medium uppercase transition-all duration-500 ease-out border border-white/10 text-center inline-flex items-center justify-center focus-visible:ring-2 focus-visible:ring-[#c5a880] focus-visible:ring-offset-2 focus-visible:ring-offset-[#060708] outline-none">
-            <span>Contact Directors</span>
+          <a href="#contact" onClick={triggerWetPaintRipple} className="w-full sm:w-auto min-h-[48px] px-10 py-4 bg-white/5 backdrop-blur-md hover:bg-white/10 text-white font-medium uppercase transition-all duration-500 ease-out border border-white/10 text-center inline-flex items-center justify-center focus-visible:ring-2 focus-visible:ring-[#c5a880] focus-visible:ring-offset-2 focus-visible:ring-offset-[#060708] outline-none relative overflow-hidden">
+            <span className="relative z-10">Contact Directors</span>
           </a>
         </div>
       </div>
