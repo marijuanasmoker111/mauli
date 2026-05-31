@@ -74,7 +74,103 @@ export default function NumbersThatMatter() {
       });
     }, containerRef);
 
-    return () => bentoCtx.revert();
+    // Concept 4: Self-Leveling HUD Cards (scroll velocity skew & spring-back)
+    const cards = gsap.utils.toArray(".bento-card") as HTMLElement[];
+    
+    const cardsTrigger = ScrollTrigger.create({
+      trigger: ".bento-grid",
+      start: "top bottom",
+      end: "bottom top",
+      onUpdate: (self) => {
+        const vel = self.getVelocity(); // Scroll speed (pixels/sec)
+        const skewY = Math.min(2.2, Math.max(-2.2, vel / 480)); // Subtle skew
+        const rotateX = Math.min(5, Math.max(-5, -vel / 240)); // Subtle 3D tilt
+        
+        cards.forEach((card) => {
+          gsap.to(card, {
+            skewY: skewY,
+            rotateX: rotateX,
+            transformPerspective: 800,
+            duration: 0.15,
+            ease: "power1.out",
+            overwrite: "auto",
+            force3D: true,
+            onComplete: () => {
+              // Smooth, springy return to perfectly flat/level planes
+              gsap.to(card, {
+                skewY: 0,
+                rotateX: 0,
+                duration: 0.85,
+                ease: "elastic.out(1.1, 0.4)",
+                overwrite: "auto"
+              });
+            }
+          });
+        });
+      }
+    });
+
+    // Concept 2: Desktop mouse move gloss tracking
+    const mouseHandlers = new Map<HTMLElement, (e: MouseEvent) => void>();
+    
+    cards.forEach((card) => {
+      const handleMouseMove = (e: MouseEvent) => {
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        
+        gsap.to(card, {
+          "--gloss-x": `${x}%`,
+          "--gloss-y": `${y}%`,
+          duration: 0.35,
+          ease: "power2.out"
+        });
+      };
+      card.addEventListener("mousemove", handleMouseMove);
+      mouseHandlers.set(card, handleMouseMove);
+    });
+
+    // Concept 2: Mobile gyroscopic gloss tracking (global tilt response)
+    let targetX = 50;
+    let targetY = 50;
+    let currentX = 50;
+    let currentY = 50;
+
+    const handleOrientation = (e: DeviceOrientationEvent) => {
+      const { gamma, beta } = e;
+      if (gamma !== null && beta !== null) {
+        // Map gamma (-30 to 30) to 0 to 100%
+        targetX = Math.max(0, Math.min(100, ((gamma + 30) / 60) * 100));
+        // Map beta (15 to 75) to 0 to 100%
+        targetY = Math.max(0, Math.min(100, ((beta - 15) / 60) * 100));
+      }
+    };
+
+    window.addEventListener("deviceorientation", handleOrientation);
+
+    // Dynamic interpolation ticker
+    const ticker = () => {
+      currentX += (targetX - currentX) * 0.1;
+      currentY += (targetY - currentY) * 0.1;
+      
+      cards.forEach((card) => {
+        card.style.setProperty("--gloss-x", `${currentX}%`);
+        card.style.setProperty("--gloss-y", `${currentY}%`);
+      });
+    };
+    
+    gsap.ticker.add(ticker);
+
+    return () => {
+      bentoCtx.revert();
+      cardsTrigger.kill();
+      window.removeEventListener("deviceorientation", handleOrientation);
+      gsap.ticker.remove(ticker);
+      cards.forEach((card) => {
+        const handler = mouseHandlers.get(card);
+        if (handler) card.removeEventListener("mousemove", handler);
+      });
+    };
   }, []);
 
   return (

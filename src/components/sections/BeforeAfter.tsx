@@ -39,6 +39,28 @@ export default function BeforeAfter() {
               "-=0.6"
             );
           }
+
+          // Concept 1: Automatic Squeegee Sweep Reveal on viewport entry
+          const sweepObj = { value: 0 };
+          tl.fromTo(sweepObj,
+            { value: 0 },
+            {
+              value: 100,
+              duration: 1.8,
+              ease: "power2.inOut",
+              onUpdate: () => {
+                setSliderPosition(sweepObj.value);
+              }
+            },
+            "-=0.5"
+          ).to(sweepObj, {
+            value: 50,
+            duration: 1.3,
+            ease: "power3.out",
+            onUpdate: () => {
+              setSliderPosition(sweepObj.value);
+            }
+          });
         }
       });
     }, sectionRef);
@@ -138,7 +160,7 @@ export default function BeforeAfter() {
 
           {/* Slider line & handle */}
           <div
-            className="absolute top-0 bottom-0 z-20 w-0.5 bg-accent-blue pointer-events-none"
+            className="absolute top-0 bottom-0 z-20 w-0.5 bg-accent-blue pointer-events-none shadow-[0_0_15px_rgba(59,130,246,0.85)]"
             style={{ left: `${sliderPosition}%` }}
           >
             <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-black border border-accent-blue flex items-center justify-center pointer-events-none shadow-2xl transition-transform duration-150 ${isDragging ? 'scale-110' : 'scale-100'}`}>
