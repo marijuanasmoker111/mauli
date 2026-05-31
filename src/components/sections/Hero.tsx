@@ -232,7 +232,7 @@ export default function Hero() {
       </div>
 
       {/* Dynamic SVG Filter for next-gen Epoxy Fluid simulations */}
-      <svg className="absolute w-0 h-0 invisible pointer-events-none" aria-hidden="true">
+      <svg className="absolute pointer-events-none opacity-0" aria-hidden="true" style={{ width: 0, height: 0 }}>
         <defs>
           <filter id="epoxy-liquid-filter" colorInterpolationFilters="sRGB">
             <feTurbulence

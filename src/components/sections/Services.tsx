@@ -253,7 +253,7 @@ export default function Services() {
       ))}
 
       {/* Invisible SVG Definition for next-gen Liquid Membrane slide transitions */}
-      <svg className="absolute w-0 h-0 invisible pointer-events-none" aria-hidden="true">
+      <svg className="absolute pointer-events-none opacity-0" aria-hidden="true" style={{ width: 0, height: 0 }}>
         <defs>
           {services.map((service, idx) => (
             <clipPath 
