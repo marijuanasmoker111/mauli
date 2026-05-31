@@ -20,7 +20,7 @@ export default function Services() {
 
       if (isMobile) {
         // Mobile layout: simply animate each slide's content when it enters the viewport
-        slides.forEach((slide) => {
+        slides.forEach((slide, idx) => {
           const title = slide.querySelector(".reveal-title");
           const subtitle = slide.querySelector(".reveal-subtitle");
           const specs = slide.querySelectorAll(".reveal-spec");
@@ -34,10 +34,27 @@ export default function Services() {
             once: true,
             onEnter: () => {
               const tl = gsap.timeline();
+
+              // Mobile gooey membrane rollout reveal
+              const clipPathEl = document.getElementById(`service-path-${idx}`);
+              if (clipPathEl) {
+                gsap.set(clipPathEl, { attr: { d: "M 0 0.12 C 0.3 0.28, 0.7 0.28, 1 0.12 L 1 1 L 0 1 Z" } });
+                tl.to(clipPathEl, {
+                  attr: { d: "M 0 0 C 0.3 -0.06, 0.7 -0.06, 1 0 L 1 1 L 0 1 Z" },
+                  duration: 0.75,
+                  ease: "power2.inOut"
+                }).to(clipPathEl, {
+                  attr: { d: "M 0 0 C 0.3 0, 0.7 0, 1 0 L 1 1 L 0 1 Z" },
+                  duration: 0.45,
+                  ease: "power2.out"
+                }, "-=0.15");
+              }
+
               if (title) {
                 tl.fromTo(title, 
                   { yPercent: 40, opacity: 0 }, 
-                  { yPercent: 0, opacity: 1, duration: 0.7, ease: "power3.out" }
+                  { yPercent: 0, opacity: 1, duration: 0.7, ease: "power3.out" },
+                  "-=0.9" // Run in tandem with clip morph
                 );
               }
               if (subtitle) {
@@ -96,7 +113,27 @@ export default function Services() {
             index - 1
           );
 
-          // 2. Animate background image translating in opposite direction (parallax depth)
+          // 2. Liquid Membrane Morph: Animate top edge clipPath to simulate elastic stretching
+          const clipPathEl = document.getElementById(`service-path-${index}`);
+          if (clipPathEl) {
+            // Set initial gooey lag curve
+            gsap.set(clipPathEl, {
+              attr: { d: "M 0 0 C 0.3 0.35, 0.7 0.35, 1 0 L 1 1 L 0 1 Z" }
+            });
+
+            // Stretch and snap transition
+            tl.to(clipPathEl, {
+              attr: { d: "M 0 0 C 0.3 -0.15, 0.7 -0.15, 1 0 L 1 1 L 0 1 Z" },
+              ease: "power1.inOut",
+            }, index - 1)
+            .to(clipPathEl, {
+              attr: { d: "M 0 0 C 0.3 0, 0.7 0, 1 0 L 1 1 L 0 1 Z" },
+              ease: "power2.out",
+              duration: 0.3
+            }, index - 0.75); // Snaps flat as slide locks in
+          }
+
+          // 3. Animate background image translating in opposite direction (parallax depth)
           if (img) {
             tl.fromTo(img,
               { yPercent: -30 },
@@ -105,7 +142,7 @@ export default function Services() {
             );
           }
 
-          // 3. Staggered inner text reveals inside the active scroll slide frame
+          // 4. Staggered inner text reveals inside the active scroll slide frame
           const title = slide.querySelector(".reveal-title");
           const subtitle = slide.querySelector(".reveal-subtitle");
           const specs = slide.querySelectorAll(".reveal-spec");
@@ -146,7 +183,11 @@ export default function Services() {
         <section
           key={service.id}
           className="service-slide relative md:absolute md:inset-0 w-full min-h-[85vh] md:h-full flex flex-col justify-between p-6 sm:p-10 md:p-16 lg:p-24 bg-surface border-b border-white/5 md:border-b-0"
-          style={{ zIndex: idx + 1 }}
+          style={{ 
+            zIndex: idx + 1,
+            clipPath: `url(#service-clip-${idx})`,
+            WebkitClipPath: `url(#service-clip-${idx})`
+          }}
           aria-label={`Service: ${service.title}`}
         >
           {/* Background image & gradient overlay */}
@@ -210,6 +251,25 @@ export default function Services() {
           </div>
         </section>
       ))}
+
+      {/* Invisible SVG Definition for next-gen Liquid Membrane slide transitions */}
+      <svg className="absolute w-0 h-0 invisible pointer-events-none" aria-hidden="true">
+        <defs>
+          {services.map((service, idx) => (
+            <clipPath 
+              key={service.id} 
+              id={`service-clip-${idx}`} 
+              clipPathUnits="objectBoundingBox"
+            >
+              <path 
+                id={`service-path-${idx}`} 
+                className="service-clip-path-el"
+                d="M 0 0 C 0.3 0, 0.7 0, 1 0 L 1 1 L 0 1 Z" 
+              />
+            </clipPath>
+          ))}
+        </defs>
+      </svg>
     </div>
   );
 }

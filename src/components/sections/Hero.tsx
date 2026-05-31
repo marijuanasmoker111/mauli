@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import Header from "../layout/Header";
 
@@ -14,6 +15,8 @@ export default function Hero() {
   const indicatorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
     // Hardware accelerated parallax transition
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -30,6 +33,27 @@ export default function Hero() {
         scale: 1.05, 
         force3D: true,
         ease: "none" 
+      });
+    }
+
+    // Elegant, physical entry pour animation using the SVG Displacement Filter
+    const filterElement = document.getElementById("epoxy-displacement");
+    let initialPourTween: gsap.core.Tween | null = null;
+    
+    if (filterElement) {
+      // Apply initial heavy fluid distortion
+      gsap.set(filterElement, { attr: { scale: 140 } });
+      
+      // Apply style filter to the target elements
+      if (bgImageRef.current) bgImageRef.current.style.filter = "url(#epoxy-liquid-filter)";
+      if (titleRef.current) titleRef.current.style.filter = "url(#epoxy-liquid-filter)";
+
+      // Animate displacement scale down to 0 (solid precision surface)
+      initialPourTween = gsap.to(filterElement, {
+        attr: { scale: 0 },
+        duration: 2.2,
+        ease: "power2.out",
+        delay: 0.2,
       });
     }
 
@@ -90,9 +114,44 @@ export default function Hero() {
       );
     }
 
+    // Reactive scroll-velocity liquefaction
+    let velocityTween: gsap.core.Tween | null = null;
+    
+    const scrollTriggerInstance = ScrollTrigger.create({
+      trigger: containerRef.current,
+      start: "top top",
+      end: "bottom top",
+      onUpdate: (self) => {
+        const vel = Math.abs(self.getVelocity()); // Get scroll speed (pixels/sec)
+        const targetScale = Math.min(22, vel / 140); // Clamp maximum distortion to preserve readability
+        
+        if (filterElement) {
+          if (velocityTween) velocityTween.kill();
+          
+          velocityTween = gsap.to(filterElement, {
+            attr: { scale: targetScale },
+            duration: 0.15,
+            ease: "power1.out",
+            overwrite: "auto",
+            onComplete: () => {
+              // Return to crystalline solid when scrolling halts
+              gsap.to(filterElement, {
+                attr: { scale: 0 },
+                duration: 0.7,
+                ease: "power2.out"
+              });
+            }
+          });
+        }
+      }
+    });
+
     return () => {
       tl.kill();
       revealTl.kill();
+      if (initialPourTween) initialPourTween.kill();
+      if (velocityTween) velocityTween.kill();
+      scrollTriggerInstance.kill();
     };
   }, []);
 
@@ -171,6 +230,29 @@ export default function Hero() {
         <span className="w-[1px] h-12 bg-gradient-to-b from-[#c5a880]/50 to-transparent mx-auto sm:mx-0 sm:ml-2"></span>
         <span className="uppercase">Scroll to explore</span>
       </div>
+
+      {/* Dynamic SVG Filter for next-gen Epoxy Fluid simulations */}
+      <svg className="absolute w-0 h-0 invisible pointer-events-none" aria-hidden="true">
+        <defs>
+          <filter id="epoxy-liquid-filter" colorInterpolationFilters="sRGB">
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.012"
+              numOctaves="3"
+              result="noise"
+              seed="5"
+            />
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="noise"
+              scale="0"
+              xChannelSelector="R"
+              yChannelSelector="G"
+              id="epoxy-displacement"
+            />
+          </filter>
+        </defs>
+      </svg>
     </section>
   );
 }
