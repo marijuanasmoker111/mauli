@@ -207,13 +207,13 @@
   }
 
   /* Specular Glare Reflections on Showcase Images */
-  .asym-img, .mobile-project-image-container {
+  .asym-img, .mobile-project-image-container, .form-glass-panel {
     position: relative;
     transform-style: preserve-3d;
     backface-visibility: hidden;
   }
   
-  .asym-img::before, .mobile-project-image-container::before {
+  .asym-img::before, .mobile-project-image-container::before, .form-glass-panel::before {
     content: "";
     position: absolute;
     inset: 0;
@@ -229,12 +229,12 @@
     mix-blend-mode: overlay;
   }
   
-  .asym-img:hover::before, .mobile-project-image-container:hover::before {
+  .asym-img:hover::before, .mobile-project-image-container:hover::before, .form-glass-panel:hover::before {
     opacity: 1;
   }
   
   @media (max-width: 768px) {
-    .mobile-project-image-container::before {
+    .mobile-project-image-container::before, .form-glass-panel::before {
       opacity: 0.7; /* Active on mobile to respond to device tilt reflection */
     }
   }
