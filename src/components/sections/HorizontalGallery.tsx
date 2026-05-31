@@ -20,6 +20,7 @@ export default function HorizontalGallery() {
     
     // Desktop mouse move parallax / multi-planar cards & hover gloss
     const desktopMouseHandlers = new Map<HTMLElement, { move: (e: MouseEvent) => void; leave: () => void }>();
+    let velocityTriggerInstance: ScrollTrigger | null = null;
 
     const ctx = gsap.context(() => {
       if (!isMobile) {
@@ -42,7 +43,7 @@ export default function HorizontalGallery() {
           }
         });
 
-        // Parallax image rotates inside the panel container
+        // 1. Desktop individual panel parallax rotation on horizontal scroll
         panels.forEach((panel) => {
           const img = panel.querySelector(".asym-img") as HTMLElement;
           if (img) {
@@ -65,7 +66,30 @@ export default function HorizontalGallery() {
           }
         });
 
-        // Concept 5 & 2: Desktop 3D Mouse Parallax & Hover Gloss Reflection
+        // 2. Spatial Corridor Parallax: Slide offset cards horizontally at a faster rate than the frames
+        panels.forEach((panel, index) => {
+          if (index === 0) return;
+          const textCard = panel.querySelector(".offset-text-card") as HTMLElement;
+          if (textCard) {
+            gsap.fromTo(textCard,
+              { xPercent: index % 2 === 0 ? 16 : -16 },
+              {
+                xPercent: index % 2 === 0 ? -16 : 16,
+                ease: "none",
+                force3D: true,
+                scrollTrigger: {
+                  trigger: panel,
+                  containerAnimation: scrollTween,
+                  start: "left right",
+                  end: "right left",
+                  scrub: true,
+                }
+              }
+            );
+          }
+        });
+
+        // 3. Desktop 3D Mouse Parallax & Hover Gloss Reflection
         panels.forEach((panel) => {
           const imgContainer = panel.querySelector(".asym-img") as HTMLElement;
           const textCard = panel.querySelector(".offset-text-card") as HTMLElement;
@@ -74,11 +98,9 @@ export default function HorizontalGallery() {
 
           const handleMouseMove = (e: MouseEvent) => {
             const rect = panel.getBoundingClientRect();
-            // Normalized offset from center (-1 to 1)
             const normX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
             const normY = ((e.clientY - rect.top) / rect.height) * 2 - 1;
             
-            // Render Gloss coords on hover
             const imgRect = imgContainer.getBoundingClientRect();
             const glossX = ((e.clientX - imgRect.left) / imgRect.width) * 100;
             const glossY = ((e.clientY - imgRect.top) / imgRect.height) * 100;
@@ -119,6 +141,61 @@ export default function HorizontalGallery() {
           panel.addEventListener("mousemove", handleMouseMove);
           panel.addEventListener("mouseleave", handleMouseLeave);
           desktopMouseHandlers.set(panel, { move: handleMouseMove, leave: handleMouseLeave });
+        });
+
+        // 4. Scroll-Velocity Image Liquefaction & Text Molecular Stretching
+        const titles = gsap.utils.toArray(".project-title-heading") as HTMLElement[];
+        const galleryFilter = document.getElementById("gallery-displacement");
+        let imageLiquefactionTween: gsap.core.Tween | null = null;
+        const titleStretchingTweens: (gsap.core.Tween | undefined)[] = [];
+
+        velocityTriggerInstance = ScrollTrigger.create({
+          trigger: trigger,
+          start: "top top",
+          end: () => `+=${container.scrollWidth - window.innerWidth}`,
+          onUpdate: (self) => {
+            const vel = Math.abs(self.getVelocity()); // Get scroll speed (pixels/sec)
+            const targetScale = Math.min(20, vel / 130); // Clamp maximum image warp distortion
+            const targetTracking = Math.min(0.22, vel / 11000); // Clamp maximum letter spacing stretch (em)
+            
+            if (galleryFilter) {
+              if (imageLiquefactionTween) imageLiquefactionTween.kill();
+              
+              imageLiquefactionTween = gsap.to(galleryFilter, {
+                attr: { scale: targetScale },
+                duration: 0.15,
+                ease: "power1.out",
+                overwrite: "auto",
+                onComplete: () => {
+                  // Cures back to glass flat solid floor
+                  gsap.to(galleryFilter, {
+                    attr: { scale: 0 },
+                    duration: 0.65,
+                    ease: "power2.out"
+                  });
+                }
+              });
+            }
+
+            titles.forEach((title, tIdx) => {
+              if (titleStretchingTweens[tIdx]) titleStretchingTweens[tIdx].kill();
+              
+              titleStretchingTweens[tIdx] = gsap.to(title, {
+                letterSpacing: `${targetTracking}em`,
+                duration: 0.15,
+                ease: "power1.out",
+                overwrite: "auto",
+                onComplete: () => {
+                  // Spring elastic snap back to tight surgical precision tracking
+                  gsap.to(title, {
+                    letterSpacing: "-0.03em",
+                    duration: 0.75,
+                    ease: "elastic.out(1.1, 0.4)"
+                  });
+                }
+              });
+            });
+          }
         });
       } else {
         // Mobile Layout: Scroll-driven paint-roll card reveals
@@ -203,6 +280,7 @@ export default function HorizontalGallery() {
 
     return () => {
       ctx.revert();
+      if (velocityTriggerInstance) velocityTriggerInstance.kill();
       window.removeEventListener("deviceorientation", handleOrientation);
       gsap.ticker.remove(ticker);
       
@@ -377,6 +455,7 @@ export default function HorizontalGallery() {
                     clipPath: idx % 2 === 0 
                       ? "polygon(2% 0%, 100% 0%, 98% 100%, 0% 100%)" 
                       : "polygon(0% 0%, 98% 2%, 100% 100%, 2% 98%)",
+                    filter: "url(#gallery-liquid-filter) mix-blend-luminosity",
                   }}
                 >
                   {/* Visual Glassmorphic Shine Overlay */}
@@ -416,7 +495,7 @@ export default function HorizontalGallery() {
                     </span>
                   </div>
                   
-                  <h3 className="font-display text-xl md:text-2xl font-black text-white uppercase tracking-tight mb-4 group-hover:text-[#c5a880] transition-colors duration-500">
+                  <h3 className="project-title-heading font-display text-xl md:text-2xl font-black text-white uppercase tracking-tight mb-4 group-hover:text-[#c5a880] transition-colors duration-500" style={{ letterSpacing: "-0.03em" }}>
                     {project.client}
                   </h3>
                   
@@ -462,9 +541,10 @@ export default function HorizontalGallery() {
         </div>
       </div>
 
-      {/* Invisible SVG Definition for mobile Paint-Roll reveals */}
+      {/* Invisible SVG Definition for mobile Paint-Roll reveals & Desktop Scroll Liquefaction */}
       <svg className="absolute pointer-events-none opacity-0" aria-hidden="true" style={{ width: 0, height: 0 }}>
         <defs>
+          {/* Mobile Clip Paths */}
           {projects.map((project, idx) => (
             <clipPath 
               key={`mobile-clip-${project.id}`} 
@@ -477,6 +557,25 @@ export default function HorizontalGallery() {
               />
             </clipPath>
           ))}
+          
+          {/* Dedicated Desktop Scroll Liquefaction Filter */}
+          <filter id="gallery-liquid-filter" colorInterpolationFilters="sRGB">
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.014"
+              numOctaves="3"
+              result="noise"
+              seed="12"
+            />
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="noise"
+              scale="0"
+              xChannelSelector="R"
+              yChannelSelector="G"
+              id="gallery-displacement"
+            />
+          </filter>
         </defs>
       </svg>
     </div>
